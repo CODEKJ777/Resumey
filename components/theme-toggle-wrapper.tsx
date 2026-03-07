@@ -5,6 +5,6 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 export function ThemeToggleWrapper() {
   const pathname = usePathname()
-  if (pathname === '/dashboard/create') return null
+  if (pathname === '/dashboard/create' || pathname === '/dashboard/resumes' || pathname === '/dashboard/compare' || pathname === '/dashboard/ats-score') return null
   return <ThemeToggle />
 }

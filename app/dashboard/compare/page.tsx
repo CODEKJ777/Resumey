@@ -11,6 +11,8 @@ import {
 import { Card } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
+import { FileUpload } from "@/components/ui/file-upload"
+import { parseResumeFile, type ParsedResume } from "@/lib/parse-resume"
 
 interface Resume {
   id: string
@@ -51,6 +53,12 @@ export default function CompareResumesPage() {
   const [isLoading, setIsLoading] = useState(true)
   const { toast } = useToast()
 
+  // New states for resume 2 upload
+  const [resume2Mode, setResume2Mode] = useState<'select' | 'upload'>('select')
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [isParsing, setIsParsing] = useState(false)
+  const [parseError, setParseError] = useState<string | null>(null)
+
   useEffect(() => {
     fetchResumes()
   }, [])
@@ -60,8 +68,49 @@ export default function CompareResumesPage() {
   }, [resume1Id])
 
   useEffect(() => {
-    if (resume2Id) fetchResumeDetail(resume2Id, setResume2)
-  }, [resume2Id])
+    if (resume2Id && resume2Mode === 'select') fetchResumeDetail(resume2Id, setResume2)
+  }, [resume2Id, resume2Mode])
+
+  // Parse uploaded file
+  useEffect(() => {
+    if (uploadedFile && resume2Mode === 'upload') {
+      handleFileParse(uploadedFile)
+    }
+  }, [uploadedFile, resume2Mode])
+
+  const handleFileSelect = async (file: File) => {
+    setUploadedFile(file)
+    setParseError(null)
+  }
+
+  const handleFileParse = async (file: File) => {
+    setIsParsing(true)
+    setParseError(null)
+    try {
+      const parsedResume = await parseResumeFile(file)
+      setResume2(parsedResume as Resume) // Cast since interfaces are compatible
+      toast({
+        title: "Resume parsed successfully",
+        description: "The uploaded resume has been processed for comparison.",
+      })
+    } catch (error: any) {
+      setParseError(error.message)
+      setResume2(null)
+      toast({
+        title: "Parsing failed",
+        description: error.message,
+        variant: "destructive",
+      })
+    } finally {
+      setIsParsing(false)
+    }
+  }
+
+  const handleFileClear = () => {
+    setUploadedFile(null)
+    setResume2(null)
+    setParseError(null)
+  }
 
   const fetchResumes = async () => {
     try {
@@ -172,18 +221,54 @@ export default function CompareResumesPage() {
         </div>
         <div>
           <label className="text-sm font-medium">Resume 2</label>
-          <Select value={resume2Id} onValueChange={setResume2Id}>
-            <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select a resume" />
-            </SelectTrigger>
-            <SelectContent>
-              {resumes.map((r) => (
-                <SelectItem key={r.id} value={r.id}>
-                  {r.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="space-y-2">
+            {resume2Mode === 'select' ? (
+              <>
+                <Select value={resume2Id} onValueChange={setResume2Id}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a resume" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {resumes.map((r) => (
+                      <SelectItem key={r.id} value={r.id}>
+                        {r.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-muted-foreground">Select from saved resume or upload your own TXT</p>
+                <Select value={resume2Mode} onValueChange={(value: 'select' | 'upload') => setResume2Mode(value)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="select">Select from saved resumes</SelectItem>
+                    <SelectItem value="upload">Upload TXT resume file</SelectItem>
+                  </SelectContent>
+                </Select>
+              </>
+            ) : (
+              <>
+                <FileUpload
+                  onFileSelect={handleFileSelect}
+                  onClear={handleFileClear}
+                  selectedFile={uploadedFile}
+                  isLoading={isParsing}
+                  error={parseError}
+                />
+                <p className="text-sm text-muted-foreground">Select from saved resume or upload your own TXT</p>
+                <Select value={resume2Mode} onValueChange={(value: 'select' | 'upload') => setResume2Mode(value)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="select">Select from saved resumes</SelectItem>
+                    <SelectItem value="upload">Upload TXT resume file</SelectItem>
+                  </SelectContent>
+                </Select>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

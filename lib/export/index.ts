@@ -65,7 +65,7 @@ export class ResumeExporter {
 
   // Generate professional HTML for printing
   private generatePrintableHTML(): string {
-    const { personalInfo } = this.data
+    const personalInfo = (this.data as any).personal_info
     
     return `
       <!DOCTYPE html>
@@ -154,7 +154,7 @@ export class ResumeExporter {
 
   // Generate plain text for ATS systems
   private generatePlainText(): string {
-    const { personalInfo } = this.data
+    const personalInfo = (this.data as any).personal_info
     let text = ''
     
     // Header
