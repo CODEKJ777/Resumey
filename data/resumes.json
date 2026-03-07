@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1772734345321",
+    "title": "Software Development",
+    "domain": "Web Development",
+    "personal_info": {
+      "fullName": "Arjun Nair",
+      "email": "arjun.nair@example.com",
+      "phone": "+91 98765 43210",
+      "location": "",
+      "summary": "Motivated computer science student with strong interest in software development and game development. Experienced in Python programming, web development, and building small projects. Passionate about learning new technologies and solving real-world problems through programming."
+    },
+    "objective": "Seeking opportunities to develop programming and game development skills while contributing to creative and technical projects. Interested in learning modern technologies and building innovative digital products.",
+    "skills": [
+      "Python Programming  Unreal Engine 5  Basic C++  Game Design Basics  SQL Fundamentals  FL Studio  Music Production  Problem Solving"
+    ],
+    "education": [
+      {
+        "id": "1772768336468",
+        "school": "dsfdsf",
+        "degree": "dsfds",
+        "field": "sfdsfsdfdsf",
+        "startYear": "",
+        "endYear": "4458"
+      }
+    ],
+    "experience": [],
+    "certificates": [],
+    "internships": [],
+    "projects": [],
+    "presentations": [],
+    "achievements": [],
+    "extracurricular": [],
+    "languages": [],
+    "created_at": "2026-03-06T03:47:32.973Z",
+    "updated_at": "2026-03-06T03:47:32.974Z"
+  }
+]
