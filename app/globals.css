@@ -28,9 +28,9 @@
     --font-mono: var(--font-geist-mono);
     --background: 0 0% 100%;
     --foreground: 240 10% 20%;
-    --card: 0 0% 100%;
+    --card: 0 0% 100% / 0.1;
     --card-foreground: 240 10% 20%;
-    --popover: 0 0% 100%;
+    --popover: 0 0% 100% / 0.1;
     --popover-foreground: 240 10% 20%;
     --primary: 240 8% 35%;
     --primary-foreground: 0 0% 100%;
@@ -63,9 +63,9 @@
   .dark {
     --background: 0 0% 5%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 10%;
+    --card: 0 0% 10% / 0.1;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 10%;
+    --popover: 0 0% 10% / 0.1;
     --popover-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 5%;
@@ -97,10 +97,35 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%), radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0);
+    background-size: cover, 20px 20px;
+    background-attachment: fixed;
+  }
+  .dark body {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%), radial-gradient(circle at 1px 1px, rgba(255,255,255,.05) 1px, transparent 0);
+    background-size: cover, 20px 20px;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .bg-card, .bg-popover {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+  .dark .bg-card, .dark .bg-popover {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }

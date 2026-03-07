@@ -134,7 +134,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:shadow-lg transition-shadow">
+              <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white dark:text-black font-bold text-lg group-hover:shadow-lg transition-shadow">
                 R
               </div>
               <span className="text-xl font-bold text-foreground">Resumey</span>
@@ -167,22 +167,30 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 sm:py-32 lg:py-40 overflow-hidden">
+      <section id="hero" className="relative pt-12 pb-20 sm:pb-32 lg:pb-40 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-60 animate-pulse" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-60 animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-60 animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl opacity-40 animate-bounce" />
+        <div className="absolute top-10 left-10 w-64 h-64 bg-blue-500/15 rounded-full blur-2xl opacity-50 animate-float" />
+        <div className="absolute bottom-20 right-20 w-72 h-72 bg-pink-500/10 rounded-full blur-2xl opacity-45 animate-pulse" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center space-y-12">
             <div className="space-y-6 max-w-4xl mx-auto">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-tight text-balance">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm animate-float">
+                You have the skill but no job?<br />
+                Take our THEKUMMOOTIL RESUMEY.<br />
+                Satisfaction Guaranteed.
+              </div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-tight text-balance animate-in slide-in-from-bottom-4 duration-1000">
                 Land more interviews with a{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent animate-gradient-x">
                   job-winning resume
                 </span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto animate-in slide-in-from-bottom-4 duration-1000 delay-200">
                 Resumey uses AI to craft ATS-optimized resumes tailored to your target role. Get hired faster with proven formatting and content strategies.
               </p>
             </div>
@@ -244,12 +252,12 @@ export default function LandingPage() {
             {features.map((feature, idx) => {
               const Icon = feature.icon
               return (
-                <div key={idx} className="group p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 transition-all mb-4">
-                    <Icon className="w-6 h-6 text-primary" />
+                <div key={idx} className="group p-6 rounded-xl bg-card border border-border hover:border-primary/50 hover:bg-card/95 hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 hover:-rotate-1 transition-all duration-300 cursor-pointer">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 transition-all mb-4 group-hover:scale-110 duration-300">
+                    <Icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">{feature.title}</h3>
+                  <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{feature.description}</p>
                 </div>
               )
             })}
@@ -269,17 +277,17 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {howItWorks.map((step, idx) => (
-              <div key={idx} className="relative">
+              <div key={idx} className={`relative animate-in slide-in-from-bottom-4 duration-1000 delay-${idx * 200} hover:scale-105 transition-all duration-300`}>
                 {idx < howItWorks.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent" />
+                  <div className="hidden lg:block absolute top-12 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent animate-pulse" />
                 )}
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white dark:text-black font-bold text-lg hover:scale-110 hover:rotate-12 transition-all duration-300">
                     {step.number}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">{step.title}</h3>
-                    <p className="text-muted-foreground">{step.description}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2 hover:text-primary transition-colors duration-300">{step.title}</h3>
+                    <p className="text-muted-foreground hover:text-foreground/80 transition-colors duration-300">{step.description}</p>
                   </div>
                 </div>
               </div>
