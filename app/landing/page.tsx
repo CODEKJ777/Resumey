@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { 
   ArrowRight, 
@@ -18,6 +19,11 @@ import WaveBackground from '@/components/wave-background'
 
 export default function LandingPage() {
   const router = useRouter()
+  const [openItems, setOpenItems] = useState<boolean[]>(new Array(10).fill(false)) // Assuming 10 FAQ items
+
+  const toggleItem = (idx: number) => {
+    setOpenItems(prev => prev.map((open, i) => i === idx ? !open : open))
+  }
 
   const features = [
     {
@@ -334,15 +340,20 @@ export default function LandingPage() {
 
           <div className="space-y-6">
             {faqItems.map((item, idx) => (
-              <details key={idx} className="group p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors cursor-pointer">
-                <summary className="flex items-center justify-between font-semibold text-foreground">
+              <div key={idx} className="group p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+                <button
+                  onClick={() => toggleItem(idx)}
+                  className="flex items-center justify-between font-semibold text-foreground w-full text-left cursor-pointer"
+                >
                   {item.q}
-                  <ChevronRight className="w-5 h-5 group-open:rotate-90 transition-transform" />
-                </summary>
-                <p className="mt-4 text-muted-foreground leading-relaxed">
-                  {item.a}
-                </p>
-              </details>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${openItems[idx] ? 'rotate-90' : ''}`} />
+                </button>
+                <div className={`mt-4 overflow-hidden transition-all duration-300 ${openItems[idx] ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.a}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
