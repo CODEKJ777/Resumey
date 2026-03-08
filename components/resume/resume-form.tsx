@@ -16,7 +16,7 @@ import {
 import { SkillsInput } from "./skills-input"
 import { EducationSection } from "./education-section"
 import { ExperienceSection } from "./experience-section"
-import { GenericListSection } from "./generic-list-section"
+import { GenericListSection, type ListItem } from "./generic-list-section"
 import { LanguagesInput } from "./languages-input"
 
 export interface ResumeFormData {
@@ -364,7 +364,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Certificates & Courses</h3>
         <GenericListSection
           value={formData.certificates}
-          onChange={(certificates) => setFormData({ ...formData, certificates })}
+          onChange={(certificates: ListItem[]) => setFormData({ ...formData, certificates: certificates as any })}
           fields={[
             { name: "name", label: "Certificate/Course Name", placeholder: "e.g., AWS Solutions Architect" },
             { name: "issuer", label: "Issuer/Organization", placeholder: "e.g., Amazon Web Services" },
@@ -379,7 +379,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Internship Experiences</h3>
         <GenericListSection
           value={formData.internships}
-          onChange={(internships) => setFormData({ ...formData, internships })}
+          onChange={(internships: ListItem[]) => setFormData({ ...formData, internships: internships as any })}
           fields={[
             { name: "company", label: "Company", placeholder: "Company name" },
             { name: "position", label: "Position", placeholder: "e.g., Software Engineering Intern" },
@@ -395,7 +395,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Projects</h3>
         <GenericListSection
           value={formData.projects}
-          onChange={(projects) => setFormData({ ...formData, projects })}
+          onChange={(projects: ListItem[]) => setFormData({ ...formData, projects: projects as any })}
           fields={[
             { name: "title", label: "Project Title", placeholder: "Project name" },
             { name: "description", label: "Description", type: "textarea", placeholder: "What the project is about..." },
@@ -410,7 +410,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Paper Presentations</h3>
         <GenericListSection
           value={formData.presentations}
-          onChange={(presentations) => setFormData({ ...formData, presentations })}
+          onChange={(presentations: ListItem[]) => setFormData({ ...formData, presentations: presentations as any })}
           fields={[
             { name: "title", label: "Presentation Title", placeholder: "Title of presentation" },
             { name: "event", label: "Event/Conference", placeholder: "Event or conference name" },
@@ -425,7 +425,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Achievements & Awards</h3>
         <GenericListSection
           value={formData.achievements}
-          onChange={(achievements) => setFormData({ ...formData, achievements })}
+          onChange={(achievements: ListItem[]) => setFormData({ ...formData, achievements: achievements as any })}
           fields={[
             { name: "title", label: "Award/Achievement Title", placeholder: "Award name" },
             { name: "description", label: "Description", type: "textarea", placeholder: "Details about the achievement..." },
@@ -439,7 +439,7 @@ export function ResumeForm({
         <h3 className="text-lg font-semibold mb-4">Extracurricular Activities & Hobbies</h3>
         <GenericListSection
           value={formData.extracurricular}
-          onChange={(extracurricular) => setFormData({ ...formData, extracurricular })}
+          onChange={(extracurricular: ListItem[]) => setFormData({ ...formData, extracurricular: extracurricular as any })}
           fields={[
             { name: "activity", label: "Activity/Hobby", placeholder: "e.g., Leadership in Student Club" },
             { name: "description", label: "Description", type: "textarea", placeholder: "More details..." },

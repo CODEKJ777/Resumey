@@ -16,7 +16,7 @@ try {
 }
 
 // Helper functions to manage local storage
-const getResumes = () => {
+const getResumes = (): any[] => {
   try {
     if (existsSync(STORAGE_FILE)) {
       const data = readFileSync(STORAGE_FILE, 'utf-8')

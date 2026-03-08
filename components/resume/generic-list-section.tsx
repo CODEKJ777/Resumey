@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
 import { IconX, IconPlus } from "@tabler/icons-react"
 
-interface ListItem {
+export interface ListItem {
   id: string
   [key: string]: string
 }
