@@ -76,9 +76,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/dashboard/create">
+              <a href="/">
                 <IconFileText className="!size-5" />
-                <span className="text-base font-semibold">Resume Builder</span>
+                <span className="text-base font-semibold">Resumey</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
