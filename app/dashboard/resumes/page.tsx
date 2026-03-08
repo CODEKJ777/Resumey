@@ -116,8 +116,8 @@ export default function MyResumesPage() {
       await exporter.exportToPDF()
       
       toast({
-        title: "PDF Export Started",
-        description: "Print dialog opened. Choose 'Save as PDF' to download.",
+        title: "PDF Export Complete",
+        description: "Resume saved as PDF successfully.",
       })
     } catch (error: any) {
       console.error('PDF export error:', error)

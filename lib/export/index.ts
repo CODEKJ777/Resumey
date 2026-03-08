@@ -65,7 +65,7 @@ export class ResumeExporter {
 
   // Generate professional HTML for printing
   private generatePrintableHTML(): string {
-    const personalInfo = (this.data as any).personal_info
+    const personalInfo = (this.data as any).personal_info || (this.data as any).personalInfo || {}
     
     return `
       <!DOCTYPE html>
@@ -81,13 +81,13 @@ export class ResumeExporter {
       <body>
         <div class="resume">
           <header class="resume-header">
-            <h1 class="name">${this.escapeHtml(personalInfo?.fullName || 'Your Name')}</h1>
+            <h1 class="name">${this.escapeHtml(personalInfo?.fullName || '')}</h1>
             <div class="contact-info">
-              <span>${this.escapeHtml(personalInfo?.email || 'email@example.com')}</span>
+              <span>${this.escapeHtml(personalInfo?.email || '')}</span>
               <span class="separator">|</span>
-              <span>${this.escapeHtml(personalInfo?.phone || 'Phone')}</span>
+              <span>${this.escapeHtml(personalInfo?.phone || '')}</span>
               <span class="separator">|</span>
-              <span>${this.escapeHtml(personalInfo?.location || 'Location')}</span>
+              <span>${this.escapeHtml(personalInfo?.location || '')}</span>
             </div>
           </header>
 
@@ -108,14 +108,14 @@ export class ResumeExporter {
           ${this.data.experience && this.data.experience.length > 0 ? `
             <section class="section">
               <h2 class="section-title">Work Experience</h2>
-              ${this.data.experience.map(exp => `
+              ${this.data.experience.map((exp: any) => `
                 <div class="experience-item">
                   <div class="experience-header">
-                    <h3 class="position">${this.escapeHtml(exp.position || 'Position')}</h3>
-                    <span class="company">${this.escapeHtml(exp.company || 'Company')}</span>
-                    <span class="date">${this.escapeHtml(exp.startDate || '')} - ${this.escapeHtml(exp.endDate || '')}</span>
+                    <h3 class="position">${this.escapeHtml(exp.position)}</h3>
+                    <p class="company">${this.escapeHtml(exp.company)}</p>
+                    <p class="date">${this.escapeHtml(exp.startDate)} - ${this.escapeHtml(exp.endDate)}</p>
                   </div>
-                  <p class="description">${this.escapeHtml(exp.description || '')}</p>
+                  <p class="description">${this.escapeHtml(exp.description)}</p>
                 </div>
               `).join('')}
             </section>
@@ -124,12 +124,12 @@ export class ResumeExporter {
           ${this.data.education && this.data.education.length > 0 ? `
             <section class="section">
               <h2 class="section-title">Education</h2>
-              ${this.data.education.map(edu => `
+              ${this.data.education.map((edu: any) => `
                 <div class="education-item">
                   <div class="education-header">
-                    <h3 class="degree">${this.escapeHtml(edu.degree || '')} in ${this.escapeHtml(edu.field || '')}</h3>
-                    <span class="school">${this.escapeHtml(edu.school || '')}</span>
-                    <span class="date">${this.escapeHtml(edu.startYear || '')} - ${this.escapeHtml(edu.endYear || '')}</span>
+                    <h3 class="degree">${this.escapeHtml(edu.degree)} in ${this.escapeHtml(edu.field)}</h3>
+                    <p class="school">${this.escapeHtml(edu.school)}</p>
+                    <p class="date">${this.escapeHtml(edu.startYear)} - ${this.escapeHtml(edu.endYear)}</p>
                   </div>
                 </div>
               `).join('')}
@@ -140,10 +140,61 @@ export class ResumeExporter {
             <section class="section">
               <h2 class="section-title">Skills</h2>
               <div class="skills">
-                ${this.data.skills.map(skill => `
-                  <span class="skill-tag">${this.escapeHtml(skill)}</span>
+                ${this.data.skills.map((skill: any) => `
+                  <span class="skill">${this.escapeHtml(skill)}</span>
                 `).join('')}
               </div>
+            </section>
+          ` : ''}
+
+          ${this.data.projects && this.data.projects.length > 0 ? `
+            <section class="section">
+              <h2 class="section-title">Projects</h2>
+              ${this.data.projects.map((project: any) => `
+                <div class="project-item">
+                  <h3 class="project-title">${this.escapeHtml(project.title)}</h3>
+                  <p class="project-description">${this.escapeHtml(project.description)}</p>
+                  ${project.technologies ? `
+                    <p class="project-tech"><strong>Technologies:</strong> ${this.escapeHtml(project.technologies)}</p>
+                  ` : ''}
+                </div>
+              `).join('')}
+            </section>
+          ` : ''}
+
+          ${this.data.certificates && this.data.certificates.length > 0 ? `
+            <section class="section">
+              <h2 class="section-title">Certificates</h2>
+              ${this.data.certificates.map((cert: any) => `
+                <div class="certificate-item">
+                  <h3 class="cert-name">${this.escapeHtml(cert.name)}</h3>
+                  <p class="cert-issuer">${this.escapeHtml(cert.issuer)} - ${this.escapeHtml(cert.date)}</p>
+                </div>
+              `).join('')}
+            </section>
+          ` : ''}
+
+          ${this.data.achievements && this.data.achievements.length > 0 ? `
+            <section class="section">
+              <h2 class="section-title">Achievements</h2>
+              ${this.data.achievements.map((achievement: any) => `
+                <div class="achievement-item">
+                  <h3 class="achievement-title">${this.escapeHtml(achievement.title)}</h3>
+                  <p class="achievement-description">${this.escapeHtml(achievement.description)}</p>
+                </div>
+              `).join('')}
+            </section>
+          ` : ''}
+
+          ${this.data.languages && this.data.languages.length > 0 ? `
+            <section class="section">
+              <h2 class="section-title">Languages</h2>
+              ${this.data.languages.map((lang: any) => `
+                <div class="language-item">
+                  <span class="language-name">${typeof lang === 'string' ? lang : this.escapeHtml(lang.name || '')}</span>
+                  <span class="language-level">${typeof lang === 'string' ? '' : this.escapeHtml(lang.level || '')}</span>
+                </div>
+              `).join('')}
             </section>
           ` : ''}
         </div>
@@ -154,12 +205,12 @@ export class ResumeExporter {
 
   // Generate plain text for ATS systems
   private generatePlainText(): string {
-    const personalInfo = (this.data as any).personal_info
+    const personalInfo = (this.data as any).personal_info || (this.data as any).personalInfo || {}
     let text = ''
     
     // Header
-    text += `${personalInfo?.fullName || 'Your Name'}\n`
-    text += `${personalInfo?.email || 'email@example.com'} | ${personalInfo?.phone || 'Phone'} | ${personalInfo?.location || 'Location'}\n\n`
+    text += `${personalInfo?.fullName || ''}\n`
+    text += `${personalInfo?.email || ''} | ${personalInfo?.phone || ''} | ${personalInfo?.location || ''}\n\n`
     
     // Summary
     if (personalInfo?.summary) {
@@ -191,6 +242,46 @@ export class ResumeExporter {
     // Skills
     if (this.data.skills && this.data.skills.length > 0) {
       text += `SKILLS\n${this.data.skills.join(', ')}\n`
+    }
+    
+    // Projects
+    if (this.data.projects && this.data.projects.length > 0) {
+      text += `PROJECTS\n`
+      this.data.projects.forEach(project => {
+        text += `${project.title}\n`
+        text += `${project.description}\n`
+        if (project.technologies) {
+          text += `Technologies: ${project.technologies}\n`
+        }
+        text += '\n'
+      })
+    }
+    
+    // Certificates
+    if (this.data.certificates && this.data.certificates.length > 0) {
+      text += `CERTIFICATES\n`
+      this.data.certificates.forEach(cert => {
+        text += `${cert.name} - ${cert.issuer} (${cert.date})\n\n`
+      })
+    }
+    
+    // Achievements
+    if (this.data.achievements && this.data.achievements.length > 0) {
+      text += `ACHIEVEMENTS\n`
+      this.data.achievements.forEach(achievement => {
+        text += `${achievement.title}\n`
+        text += `${achievement.description}\n\n`
+      })
+    }
+    
+    // Languages
+    if (this.data.languages && this.data.languages.length > 0) {
+      text += `LANGUAGES\n`
+      this.data.languages.forEach((lang: any) => {
+        const langName = typeof lang === 'string' ? lang : lang.name || ''
+        const langLevel = typeof lang === 'string' ? '' : lang.level || ''
+        text += `${langName}${langLevel ? ' - ' + langLevel : ''}\n`
+      })
     }
     
     return text

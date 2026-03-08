@@ -708,20 +708,20 @@ export const RESUME_TEMPLATES = {
 
 // Modern Template - Clean and professional
 function ModernTemplate({ data }: { data: ResumeFormData }) {
-  const { personalInfo } = data
+  const personalInfo = (data as any).personalInfo || (data as any).personal_info || {}
   
   return (
     <div className="modern-template">
       {/* Header */}
       <header className="template-header">
         <div className="name-section">
-          <h1 className="name">{personalInfo?.fullName || 'Your Name'}</h1>
+          <h1 className="name">{personalInfo?.fullName || ''}</h1>
           <div className="contact-info">
-            <span>{personalInfo?.email || 'email@example.com'}</span>
+            <span>{personalInfo?.email || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.phone || 'Phone'}</span>
+            <span>{personalInfo?.phone || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.location || 'Location'}</span>
+            <span>{personalInfo?.location || ''}</span>
           </div>
         </div>
       </header>
@@ -848,7 +848,7 @@ function ModernTemplate({ data }: { data: ResumeFormData }) {
         <section className="template-section">
           <h2 className="section-title">Languages</h2>
           <div className="languages-list">
-            {data.languages.map((lang, index) => (
+            {data.languages.map((lang: any, index) => (
               <div key={index} className="language-item">
                 <span className="language-name">{typeof lang === 'string' ? lang : lang.name || ''}</span>
                 <span className="language-level">{typeof lang === 'string' ? '' : lang.level || ''}</span>
@@ -863,18 +863,18 @@ function ModernTemplate({ data }: { data: ResumeFormData }) {
 
 // Classic Template - Traditional and formal
 function ClassicTemplate({ data }: { data: ResumeFormData }) {
-  const { personalInfo } = data
+  const personalInfo = (data as any).personalInfo || (data as any).personal_info || {}
   
   return (
     <div className="classic-template">
       <header className="template-header">
-        <h1 className="name">{personalInfo?.fullName || 'Your Name'}</h1>
+        <h1 className="name">{personalInfo?.fullName || ''}</h1>
         <div className="contact-info">
-          <span>{personalInfo?.email || 'email@example.com'}</span>
+          <span>{personalInfo?.email || ''}</span>
           <span className="separator">|</span>
-          <span>{personalInfo?.phone || 'Phone'}</span>
+          <span>{personalInfo?.phone || ''}</span>
           <span className="separator">|</span>
-          <span>{personalInfo?.location || 'Location'}</span>
+          <span>{personalInfo?.location || ''}</span>
         </div>
       </header>
 
@@ -916,24 +916,39 @@ function ClassicTemplate({ data }: { data: ResumeFormData }) {
           <p className="skills-text">{data.skills.join(', ')}</p>
         </section>
       )}
+      
+      {data.projects && data.projects.length > 0 && (
+        <section className="template-section">
+          <h2 className="section-title">Projects</h2>
+          {data.projects.map((project, index) => (
+            <div key={index} className="project-item">
+              <h3 className="project-title">{project.title}</h3>
+              <p className="project-description">{project.description}</p>
+              {project.technologies && (
+                <p className="project-tech"><strong>Technologies:</strong> {project.technologies}</p>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
     </div>
   )
 }
 
 // Minimal Template - Clean and simple
 function MinimalTemplate({ data }: { data: ResumeFormData }) {
-  const { personalInfo } = data
+  const personalInfo = (data as any).personalInfo || (data as any).personal_info || {}
   
   return (
     <div className="minimal-template">
       <header className="template-header">
-        <h1 className="name">{personalInfo?.fullName || 'Your Name'}</h1>
+        <h1 className="name">{personalInfo?.fullName || ''}</h1>
         <div className="contact-info">
-          <span>{personalInfo?.email || 'email@example.com'}</span>
+          <span>{personalInfo?.email || ''}</span>
           <span className="separator">|</span>
-          <span>{personalInfo?.phone || 'Phone'}</span>
+          <span>{personalInfo?.phone || ''}</span>
           <span className="separator">|</span>
-          <span>{personalInfo?.location || 'Location'}</span>
+          <span>{personalInfo?.location || ''}</span>
         </div>
       </header>
 
@@ -978,25 +993,40 @@ function MinimalTemplate({ data }: { data: ResumeFormData }) {
           <p className="skills-text">{data.skills.join(', ')}</p>
         </section>
       )}
+      
+      {data.projects && data.projects.length > 0 && (
+        <section className="template-section">
+          <h2 className="section-title">Projects</h2>
+          {data.projects.map((project, index) => (
+            <div key={index} className="project-item">
+              <h3 className="project-title">{project.title}</h3>
+              <p className="project-description">{project.description}</p>
+              {project.technologies && (
+                <p className="project-tech"><strong>Technologies:</strong> {project.technologies}</p>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
     </div>
   )
 }
 
 // Creative Template - Modern and visually appealing
 function CreativeTemplate({ data }: { data: ResumeFormData }) {
-  const { personalInfo } = data
+  const personalInfo = (data as any).personalInfo || (data as any).personal_info || {}
   
   return (
     <div className="creative-template">
       <header className="template-header">
         <div className="name-section">
-          <h1 className="name">{personalInfo?.fullName || 'Your Name'}</h1>
+          <h1 className="name">{personalInfo?.fullName || ''}</h1>
           <div className="contact-info">
-            <span>{personalInfo?.email || 'email@example.com'}</span>
+            <span>{personalInfo?.email || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.phone || 'Phone'}</span>
+            <span>{personalInfo?.phone || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.location || 'Location'}</span>
+            <span>{personalInfo?.location || ''}</span>
           </div>
         </div>
       </header>
@@ -1061,19 +1091,19 @@ function CreativeTemplate({ data }: { data: ResumeFormData }) {
 
 // Executive Template - Professional and formal
 function ExecutiveTemplate({ data }: { data: ResumeFormData }) {
-  const { personalInfo } = data
+  const personalInfo = (data as any).personalInfo || (data as any).personal_info || {}
   
   return (
     <div className="executive-template">
       <header className="template-header">
         <div className="name-section">
-          <h1 className="name">{personalInfo?.fullName || 'Your Name'}</h1>
+          <h1 className="name">{personalInfo?.fullName || ''}</h1>
           <div className="contact-info">
-            <span>{personalInfo?.email || 'email@example.com'}</span>
+            <span>{personalInfo?.email || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.phone || 'Phone'}</span>
+            <span>{personalInfo?.phone || ''}</span>
             <span className="separator">|</span>
-            <span>{personalInfo?.location || 'Location'}</span>
+            <span>{personalInfo?.location || ''}</span>
           </div>
         </div>
       </header>

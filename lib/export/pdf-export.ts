@@ -8,98 +8,34 @@ export class PDFExporter {
     this.data = data
   }
 
-  // Export to PDF using direct download
+  // Export to PDF using browser print dialog
   async exportToPDF(): Promise<void> {
     try {
       // Generate HTML content
       const htmlContent = this.generatePrintableHTML()
       
-      // Create a blob with the HTML content
-      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' })
+      // Create a new window for printing
+      const printWindow = window.open('', '_blank')
+      if (!printWindow) {
+        throw new Error('Failed to open print window. Please allow popups.')
+      }
       
-      // Create download link
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `${this.sanitizeFilename(this.data.title || 'resume')}.html`
+      printWindow.document.write(htmlContent)
+      printWindow.document.close()
       
-      // Trigger download
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      
-      // Clean up
-      URL.revokeObjectURL(url)
-      
-      // Show user instructions
-      this.showPDFInstructions()
+      // Wait for content to load, then trigger print
+      setTimeout(() => {
+        printWindow.print()
+        // Close the window after printing (or after user cancels)
+        setTimeout(() => {
+          printWindow.close()
+        }, 1000)
+      }, 500)
       
     } catch (error) {
       console.error('PDF export error:', error)
-      throw new Error('Failed to export PDF')
+      throw new Error('Failed to export PDF. Please allow popups and try again.')
     }
-  }
-
-  // Show instructions for converting HTML to PDF
-  private showPDFInstructions(): void {
-    // Create instruction modal
-    const modal = document.createElement('div')
-    modal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    `
-    
-    const content = document.createElement('div')
-    content.style.cssText = `
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      max-width: 500px;
-      text-align: center;
-      font-family: Arial, sans-serif;
-    `
-    
-    content.innerHTML = `
-      <h2 style="color: #333; margin-bottom: 20px;">📄 PDF Export Instructions</h2>
-      <p style="color: #666; margin-bottom: 15px;">Your resume has been downloaded as an HTML file.</p>
-      <div style="background: #f5f5f5; padding: 15px; border-radius: 4px; margin: 20px 0; text-align: left;">
-        <h3 style="color: #333; margin-bottom: 10px;">To convert to PDF:</h3>
-        <ol style="color: #666; margin: 0; padding-left: 20px;">
-          <li>Open the downloaded HTML file in your browser</li>
-          <li>Press <strong>Ctrl+P</strong> (Windows) or <strong>Cmd+P</strong> (Mac)</li>
-          <li>Choose "Save as PDF" from the print dialog</li>
-          <li>Save as "resume.pdf"</li>
-        </ol>
-      </div>
-      <p style="color: #999; font-size: 14px; margin-top: 20px;">This method ensures perfect formatting and A4 paper size.</p>
-      <button onclick="this.parentElement.parentElement.remove()" style="
-        background: #007acc;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 20px;
-      ">Got it!</button>
-    `
-    
-    modal.appendChild(content)
-    document.body.appendChild(modal)
-    
-    // Auto-close after 15 seconds
-    setTimeout(() => {
-      if (document.body.contains(modal)) {
-        document.body.removeChild(modal)
-      }
-    }, 15000)
   }
 
   // Generate HTML content for printing
@@ -120,13 +56,13 @@ export class PDFExporter {
       <body>
         <div class="resume-print">
           <header class="resume-header">
-            <h1 class="name">${this.escapeHtml(personalInfo?.fullName || 'Your Name')}</h1>
+            <h1 class="name">${this.escapeHtml(personalInfo?.fullName || '')}</h1>
             <div class="contact-info">
-              <span>${this.escapeHtml(personalInfo?.email || 'email@example.com')}</span>
+              <span>${this.escapeHtml(personalInfo?.email || '')}</span>
               <span class="separator">|</span>
-              <span>${this.escapeHtml(personalInfo?.phone || 'Phone')}</span>
+              <span>${this.escapeHtml(personalInfo?.phone || '')}</span>
               <span class="separator">|</span>
-              <span>${this.escapeHtml(personalInfo?.location || 'Location')}</span>
+              <span>${this.escapeHtml(personalInfo?.location || '')}</span>
             </div>
           </header>
 

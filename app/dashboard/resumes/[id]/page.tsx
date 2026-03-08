@@ -4,8 +4,19 @@ import { useEffect, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { ResumeForm, ResumeFormData } from "@/components/resume/resume-form"
 import { useToast } from "@/hooks/use-toast"
+import { 
+  FileText, 
+  Download, 
+  FileCode,
+  Code
+} from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { FileText } from "lucide-react"
 import { TemplateSelector } from "@/components/template-selector"
 
 export default function EditResumePage() {
@@ -73,6 +84,9 @@ export default function EditResumePage() {
         throw new Error("Failed to save resume")
       }
 
+      // Update local state immediately
+      setResumeData(data)
+      
       toast({
         title: "Success",
         description: "Resume updated successfully",
@@ -88,12 +102,126 @@ export default function EditResumePage() {
     }
   }
 
+  const handleExportPDF = async () => {
+    if (!resumeData) return
+    
+    try {
+      // Fetch fresh resume data to ensure latest changes
+      const response = await fetch(`/api/resumes?id=${resumeId}`)
+      if (!response.ok) throw new Error("Failed to fetch latest resume data")
+      
+      const freshResumeData = await response.json()
+      const formattedData = {
+        id: freshResumeData.id,
+        title: freshResumeData.title,
+        domain: freshResumeData.domain,
+        personalInfo: freshResumeData.personal_info,
+        personal_info: freshResumeData.personal_info,
+        objective: freshResumeData.objective || '',
+        skills: freshResumeData.skills || [],
+        education: freshResumeData.education || [],
+        experience: freshResumeData.experience || [],
+        certificates: freshResumeData.certificates || [],
+        internships: freshResumeData.internships || [],
+        projects: freshResumeData.projects || [],
+        presentations: freshResumeData.presentations || [],
+        achievements: freshResumeData.achievements || [],
+        extracurricular: freshResumeData.extracurricular || [],
+        languages: freshResumeData.languages || [],
+      }
+      
+      const { PDFExporter } = await import('@/lib/export/pdf-export')
+      const exporter = new PDFExporter(formattedData)
+      await exporter.exportToPDF()
+      
+      toast({
+        title: "PDF Export Complete",
+        description: "Resume saved as PDF successfully.",
+      })
+    } catch (error: any) {
+      toast({
+        title: "Export Failed",
+        description: error.message || "Failed to export PDF",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleExportHTML = async () => {
+    if (!resumeData) return
+    
+    try {
+      // Fetch fresh resume data to ensure latest changes
+      const response = await fetch(`/api/resumes?id=${resumeId}`)
+      if (!response.ok) throw new Error("Failed to fetch latest resume data")
+      
+      const freshResumeData = await response.json()
+      const formattedData = {
+        id: freshResumeData.id,
+        title: freshResumeData.title,
+        domain: freshResumeData.domain,
+        personalInfo: freshResumeData.personal_info,
+        personal_info: freshResumeData.personal_info,
+        objective: freshResumeData.objective || '',
+        skills: freshResumeData.skills || [],
+        education: freshResumeData.education || [],
+        experience: freshResumeData.experience || [],
+        certificates: freshResumeData.certificates || [],
+        internships: freshResumeData.internships || [],
+        projects: freshResumeData.projects || [],
+        presentations: freshResumeData.presentations || [],
+        achievements: freshResumeData.achievements || [],
+        extracurricular: freshResumeData.extracurricular || [],
+        languages: freshResumeData.languages || [],
+      }
+      
+      const { ResumeExporter } = await import('@/lib/export')
+      const exporter = new ResumeExporter(formattedData)
+      exporter.exportToHTML()
+      
+      toast({
+        title: "HTML Export Complete",
+        description: "Resume downloaded as HTML file.",
+      })
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export HTML file.",
+        variant: "destructive",
+      })
+    }
+  }
+
   const handleExportText = async () => {
     if (!resumeData) return
     
     try {
+      // Fetch fresh resume data to ensure latest changes
+      const response = await fetch(`/api/resumes?id=${resumeId}`)
+      if (!response.ok) throw new Error("Failed to fetch latest resume data")
+      
+      const freshResumeData = await response.json()
+      const formattedData = {
+        id: freshResumeData.id,
+        title: freshResumeData.title,
+        domain: freshResumeData.domain,
+        personalInfo: freshResumeData.personal_info,
+        personal_info: freshResumeData.personal_info,
+        objective: freshResumeData.objective || '',
+        skills: freshResumeData.skills || [],
+        education: freshResumeData.education || [],
+        experience: freshResumeData.experience || [],
+        certificates: freshResumeData.certificates || [],
+        internships: freshResumeData.internships || [],
+        projects: freshResumeData.projects || [],
+        presentations: freshResumeData.presentations || [],
+        achievements: freshResumeData.achievements || [],
+        extracurricular: freshResumeData.extracurricular || [],
+        languages: freshResumeData.languages || [],
+      }
+      
       const { ResumeExporter } = await import('@/lib/export')
-      const exporter = new ResumeExporter(resumeData)
+      const exporter = new ResumeExporter(formattedData)
       exporter.exportToText()
       
       toast({
@@ -104,27 +232,6 @@ export default function EditResumePage() {
       toast({
         title: "Export Failed",
         description: "Failed to export text file.",
-        variant: "destructive",
-      })
-    }
-  }
-
-  const handleExportPDF = async () => {
-    if (!resumeData) return
-    
-    try {
-      const { PDFExporter } = await import('@/lib/export/pdf-export')
-      const exporter = new PDFExporter(resumeData)
-      await exporter.exportToPDF()
-      
-      toast({
-        title: "PDF Download Started",
-        description: "HTML file downloaded. Follow instructions to convert to PDF.",
-      })
-    } catch (error: any) {
-      toast({
-        title: "Export Failed",
-        description: error.message || "Failed to export PDF",
         variant: "destructive",
       })
     }
@@ -156,10 +263,27 @@ export default function EditResumePage() {
           </p>
         </div>
         
-        <Button onClick={handleExportPDF} className="gap-2">
-          <FileText className="size-4" />
-          Download PDF
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Download className="size-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleExportPDF}>
+              <FileText className="size-4 mr-2" />
+              Export PDF
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleExportHTML}>
+              <FileCode className="size-4 mr-2" />
+              Export HTML
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleExportText}>
+              <Code className="size-4 mr-2" />
+              Export Text (ATS)
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       
       {/* Tab Navigation */}
@@ -190,7 +314,7 @@ export default function EditResumePage() {
           isLoading={isSaving}
         />
       ) : (
-        <TemplateSelector resumeData={resumeData} />
+        <TemplateSelector key={resumeData?.id || 'template'} resumeData={resumeData} />
       )}
     </div>
   )

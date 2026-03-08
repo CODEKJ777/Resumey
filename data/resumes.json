@@ -1,26 +1,37 @@
 [
   {
     "id": "1772734345321",
-    "title": "Software Development",
-    "domain": "Web Development",
+    "title": "Junior Software Developer",
+    "domain": "AI/Machine Learning",
     "personal_info": {
       "fullName": "Arjun Nair",
-      "email": "arjun.nair@example.com",
+      "email": "arjun.nair.dev@gmail.com",
       "phone": "+91 98765 43210",
-      "location": "",
-      "summary": "Motivated computer science student with strong interest in software development and game development. Experienced in Python programming, web development, and building small projects. Passionate about learning new technologies and solving real-world problems through programming."
+      "location": "Kottayam, Kerala, India",
+      "summary": "Computer science student passionate about software development, artificial intelligence, and game development. Experienced with Python programming, web development, and building small technical projects. Interested in developing innovative applications and improving problem-solving skills through real-world projects."
     },
-    "objective": "Seeking opportunities to develop programming and game development skills while contributing to creative and technical projects. Interested in learning modern technologies and building innovative digital products.",
+    "objective": "Seeking an opportunity to work as a junior developer where I can apply my programming knowledge, learn modern technologies, and contribute to building impactful software and AI-based solutions.",
     "skills": [
-      "Python Programming  Unreal Engine 5  Basic C++  Game Design Basics  SQL Fundamentals  FL Studio  Music Production  Problem Solving"
+      "Python",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "SQL",
+      "Unreal Engine 5",
+      "Basic C++",
+      "Game Development",
+      "Git & GitHub",
+      "Problem Solving",
+      "FL Studio",
+      "Music Production"
     ],
     "education": [
       {
         "id": "1772768336468",
-        "school": "OLLHSS",
-        "degree": "BTECH",
+        "school": "Cochin University of Science and Technology",
+        "degree": "Bachelor of Technology",
         "field": "Computer Science",
-        "startYear": "",
+        "startYear": "2023",
         "endYear": "2027"
       }
     ],
@@ -31,17 +42,70 @@
         "position": "Junior Web Developer",
         "startDate": "2025-06",
         "endDate": "2026-03",
-        "description": "Developed responsive web pages using HTML, CSS, and JavaScript\nAssisted in building reusable React components for internal dashboards\nFixed bugs and improved website performance\nCollaborated with team using Git and GitHub for version control"
+        "description": "Developed responsive web pages using HTML, CSS, and JavaScript. Assisted in building reusable React components for internal dashboards. Fixed bugs and improved website performance. Collaborated with team using Git and GitHub for version control."
+      },
+      {
+        "id": "1772964382037",
+        "company": "CreativeByte Studios",
+        "position": "Game Development Assistant",
+        "startDate": "2024-12",
+        "endDate": "2025-02",
+        "description": "Assisted in creating small gameplay prototypes using Unreal Engine 5. Worked on level design basics and helped test gameplay mechanics."
       }
     ],
-    "certificates": [],
-    "internships": [],
-    "projects": [],
-    "presentations": [],
-    "achievements": [],
-    "extracurricular": [],
-    "languages": [],
-    "created_at": "2026-03-07T17:55:59.100Z",
-    "updated_at": "2026-03-07T17:55:59.101Z"
+    "certificates": [
+      {
+        "id": "1772964377789",
+        "name": "Python Programming Certificate",
+        "issuer": "Coursera",
+        "date": "2024"
+      }
+    ],
+    "internships": [
+      {
+        "id": "1772964370989",
+        "company": "InnoByte Technologies",
+        "position": "Software Development Intern",
+        "duration": "Dec 2024 - Feb 2025",
+        "description": "Worked on a small web application using React and Node.js. Assisted senior developers in debugging backend APIs and improving UI components."
+      }
+    ],
+    "projects": [
+      {
+        "id": "1772964368396",
+        "title": "AI Resume Builder",
+        "description": "Developed a web application that helps users create professional resumes using templates, AI suggestions, and ATS score analysis.",
+        "technologies": "React, Node.js, MongoDB"
+      }
+    ],
+    "presentations": [
+      {
+        "id": "1772964364830",
+        "title": "Artificial Intelligence in Web Development",
+        "event": "National Tech Symposium",
+        "date": "2025"
+      }
+    ],
+    "achievements": [
+      {
+        "id": "1772964357540",
+        "title": "Best Student Project Award",
+        "description": "Received for developing an AI-based resume builder application."
+      }
+    ],
+    "extracurricular": [
+      {
+        "id": "1772964315747",
+        "activity": "Music Production",
+        "description": "Produce instrumental and electronic music using FL Studio and digital instruments."
+      }
+    ],
+    "languages": [
+      "English",
+      "Malayalam",
+      "Hindi"
+    ],
+    "created_at": "2026-03-08T11:04:45.224Z",
+    "updated_at": "2026-03-08T11:04:45.224Z"
   }
 ]

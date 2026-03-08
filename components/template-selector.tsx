@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ResumeFormData } from "@/components/resume/resume-form"
 import { RESUME_TEMPLATES } from "@/lib/templates/resume-templates"
 import { Card } from "@/components/ui/card"
@@ -13,10 +13,19 @@ interface TemplateSelectorProps {
 
 export function TemplateSelector({ resumeData }: TemplateSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof RESUME_TEMPLATES>('MODERN')
+  const [freshResumeData, setFreshResumeData] = useState<ResumeFormData>(resumeData)
   const { toast } = useToast()
 
   const currentTemplate = RESUME_TEMPLATES[selectedTemplate]
   const TemplateComponent = currentTemplate.component
+
+  // Update fresh data when resumeData prop changes
+  useEffect(() => {
+    console.log('TemplateSelector - resumeData changed:', resumeData)
+    setFreshResumeData(resumeData)
+    // Force re-render by updating selected template
+    setSelectedTemplate(prev => prev)
+  }, [resumeData])
 
   return (
     <div className="space-y-6">
@@ -67,7 +76,7 @@ export function TemplateSelector({ resumeData }: TemplateSelectorProps) {
           >
             <style>{currentTemplate.styles}</style>
             <div className="template-wrapper">
-              <TemplateComponent data={resumeData} />
+              <TemplateComponent data={freshResumeData} />
             </div>
           </div>
         </div>
