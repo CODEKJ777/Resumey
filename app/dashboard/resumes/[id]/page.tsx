@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation"
 import { ResumeForm, ResumeFormData } from "@/components/resume/resume-form"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
-import { FileText, FileCode, Code } from "lucide-react"
+import { FileText } from "lucide-react"
 import { TemplateSelector } from "@/components/template-selector"
 
 export default function EditResumePage() {
@@ -88,27 +88,6 @@ export default function EditResumePage() {
     }
   }
 
-  const handleExportHTML = async () => {
-    if (!resumeData) return
-    
-    try {
-      const { ResumeExporter } = await import('@/lib/export')
-      const exporter = new ResumeExporter(resumeData)
-      exporter.exportToHTML()
-      
-      toast({
-        title: "HTML Export Complete",
-        description: "Resume downloaded as HTML file.",
-      })
-    } catch (error) {
-      toast({
-        title: "Export Failed",
-        description: "Failed to export HTML file.",
-        variant: "destructive",
-      })
-    }
-  }
-
   const handleExportText = async () => {
     if (!resumeData) return
     
@@ -125,6 +104,27 @@ export default function EditResumePage() {
       toast({
         title: "Export Failed",
         description: "Failed to export text file.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleExportPDF = async () => {
+    if (!resumeData) return
+    
+    try {
+      const { PDFExporter } = await import('@/lib/export/pdf-export')
+      const exporter = new PDFExporter(resumeData)
+      await exporter.exportToPDF()
+      
+      toast({
+        title: "PDF Download Started",
+        description: "HTML file downloaded. Follow instructions to convert to PDF.",
+      })
+    } catch (error: any) {
+      toast({
+        title: "Export Failed",
+        description: error.message || "Failed to export PDF",
         variant: "destructive",
       })
     }
@@ -156,16 +156,10 @@ export default function EditResumePage() {
           </p>
         </div>
         
-        <div className="flex gap-2">
-          <Button onClick={handleExportHTML} variant="outline" className="gap-2">
-            <FileCode className="size-4" />
-            HTML
-          </Button>
-          <Button onClick={handleExportText} variant="outline" className="gap-2">
-            <Code className="size-4" />
-            Text
-          </Button>
-        </div>
+        <Button onClick={handleExportPDF} className="gap-2">
+          <FileText className="size-4" />
+          Download PDF
+        </Button>
       </div>
       
       {/* Tab Navigation */}

@@ -3,12 +3,9 @@
 import { useState } from "react"
 import { ResumeFormData } from "@/components/resume/resume-form"
 import { RESUME_TEMPLATES } from "@/lib/templates/resume-templates"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { Eye, Download, FileText } from "lucide-react"
-import { PDFExporter } from "@/lib/export/pdf-export"
 
 interface TemplateSelectorProps {
   resumeData: ResumeFormData
@@ -16,65 +13,10 @@ interface TemplateSelectorProps {
 
 export function TemplateSelector({ resumeData }: TemplateSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof RESUME_TEMPLATES>('MODERN')
-  const [isExporting, setIsExporting] = useState(false)
   const { toast } = useToast()
 
   const currentTemplate = RESUME_TEMPLATES[selectedTemplate]
   const TemplateComponent = currentTemplate.component
-
-  const handleExportPDF = async () => {
-    try {
-      setIsExporting(true)
-      const exporter = new PDFExporter(resumeData)
-      await exporter.exportToPDF()
-      
-      toast({
-        title: "PDF Download Started",
-        description: "HTML file downloaded. Follow instructions to convert to PDF.",
-      })
-    } catch (error: any) {
-      toast({
-        title: "Export Failed",
-        description: error.message || "Failed to export PDF",
-        variant: "destructive",
-      })
-    } finally {
-      setIsExporting(false)
-    }
-  }
-
-  const handlePreview = () => {
-    const previewWindow = window.open('', '_blank', 'width=800,height=600')
-    if (!previewWindow) return
-
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Template Preview</title>
-        <style>
-          ${currentTemplate.styles}
-        </style>
-      </head>
-      <body>
-        <div class="preview-header" style="position: fixed; top: 10px; right: 10px; background: #f0f0f0; padding: 10px; border-radius: 5px; z-index: 1000;">
-          <p><strong>Preview Mode</strong></p>
-          <small>Template: ${currentTemplate.name}</small>
-        </div>
-        <div id="template-preview"></div>
-        <script>
-          // Render the template
-          const templateData = ${JSON.stringify(resumeData)};
-          // This would be replaced with actual template rendering
-          document.getElementById('template-preview').innerHTML = '<p>Template preview would render here</p>';
-        </script>
-      </body>
-      </html>
-    `
-    
-    previewWindow.document.write(htmlContent)
-    previewWindow.document.close()
-  }
 
   return (
     <div className="space-y-6">
@@ -83,17 +25,6 @@ export function TemplateSelector({ resumeData }: TemplateSelectorProps) {
           <div>
             <h3 className="text-lg font-semibold">Resume Templates</h3>
             <p className="text-sm text-muted-foreground">Choose a professional template for your resume</p>
-          </div>
-          
-          <div className="flex gap-2">
-            <Button onClick={handlePreview} variant="outline" size="sm" className="gap-2">
-              <Eye className="size-4" />
-              Preview
-            </Button>
-            <Button onClick={handleExportPDF} disabled={isExporting} size="sm" className="gap-2">
-              <FileText className="size-4" />
-              {isExporting ? "Downloading..." : "Download PDF"}
-            </Button>
           </div>
         </div>
 
@@ -125,10 +56,9 @@ export function TemplateSelector({ resumeData }: TemplateSelectorProps) {
           <div 
             className="template-preview-container"
             style={{
-              transform: 'scale(0.7)',
+              transform: 'scale(0.6)',
               transformOrigin: 'top left',
-              width: '142%',
-              height: '600px',
+              width: '167%',
               overflow: 'hidden',
               border: '1px solid #e2e8f0',
               borderRadius: '4px',
