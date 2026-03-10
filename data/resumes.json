@@ -94,5 +94,35 @@
     ],
     "created_at": "2026-03-09T09:16:34.124Z",
     "updated_at": "2026-03-09T09:16:34.124Z"
+  },
+  {
+    "id": "1773114526899",
+    "title": "game dev",
+    "domain": "game dev",
+    "personal_info": {
+      "fullName": "kalidas",
+      "email": "kaldi@gmail.com",
+      "phone": "",
+      "location": "",
+      "summary": ""
+    },
+    "objective": "",
+    "skills": [
+      "c",
+      "r",
+      "c++",
+      "Python"
+    ],
+    "education": [],
+    "experience": [],
+    "certificates": [],
+    "internships": [],
+    "projects": [],
+    "presentations": [],
+    "achievements": [],
+    "extracurricular": [],
+    "languages": [],
+    "created_at": "2026-03-10T03:50:50.048Z",
+    "updated_at": "2026-03-10T03:50:50.048Z"
   }
 ]

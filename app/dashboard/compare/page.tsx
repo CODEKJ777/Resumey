@@ -328,8 +328,8 @@ export default function CompareResumesPage() {
               </p>
               {resume1.education && resume1.education.length > 0 && (
                 <div className="space-y-1 text-sm">
-                  {resume1.education.map((edu, i) => (
-                    <p key={edu.id || i}>{edu.school}</p>
+                  {resume1.education.map((edu, idx) => (
+                    <p key={edu.id || idx}>{edu.school}</p>
                   ))}
                 </div>
               )}
@@ -340,8 +340,8 @@ export default function CompareResumesPage() {
               </p>
               {resume2.education && resume2.education.length > 0 && (
                 <div className="space-y-1 text-sm">
-                  {resume2.education.map((edu, i) => (
-                    <p key={edu.id || i}>{edu.school}</p>
+                  {resume2.education.map((edu, idx) => (
+                    <p key={edu.id || idx}>{edu.school}</p>
                   ))}
                 </div>
               )}
@@ -356,8 +356,8 @@ export default function CompareResumesPage() {
               </p>
               {resume1.experience && resume1.experience.length > 0 && (
                 <div className="space-y-1 text-sm">
-                  {resume1.experience.map((exp, i) => (
-                    <p key={exp.id || i}>{exp.position}</p>
+                  {resume1.experience.map((exp, idx) => (
+                    <p key={exp.id || idx}>{exp.position}</p>
                   ))}
                 </div>
               )}
@@ -368,8 +368,8 @@ export default function CompareResumesPage() {
               </p>
               {resume2.experience && resume2.experience.length > 0 && (
                 <div className="space-y-1 text-sm">
-                  {resume2.experience.map((exp, i) => (
-                    <p key={exp.id || i}>{exp.position}</p>
+                  {resume2.experience.map((exp, idx) => (
+                    <p key={exp.id || idx}>{exp.position}</p>
                   ))}
                 </div>
               )}
