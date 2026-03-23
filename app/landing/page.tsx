@@ -184,7 +184,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center space-y-12">
             <div className="space-y-6 max-w-4xl mx-auto">
-                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-tight text-balance animate-in slide-in-from-bottom-4 duration-1000">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-tight text-balance animate-in slide-in-from-bottom-4 duration-1000">
                 Land more interviews with a{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent animate-gradient-x">
                   job-winning resume
